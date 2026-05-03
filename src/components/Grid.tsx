@@ -5,9 +5,11 @@ interface GridProps {
     grid: string[][];
     onCellChange: (row: number, col: number, value: string) => void;
     onCellFocus: (row: number, col: number) => void;
+    onValidInput?: (row: number, col: number) => void;
+    onNavigate?: (row: number, col: number, direction: 'up' | 'down' | 'left' | 'right') => void;
 }
 
-function Grid({ grid, onCellChange, onCellFocus }: GridProps) {
+function Grid({ grid, onCellChange, onCellFocus, onValidInput, onNavigate }: GridProps) {
     const gridRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -30,6 +32,10 @@ function Grid({ grid, onCellChange, onCellFocus }: GridProps) {
                                 onCellChange(rowIndex, colIndex, value)
                             }
                             onFocus={() => onCellFocus(rowIndex, colIndex)}
+                            onValidInput={onValidInput ? () => onValidInput(rowIndex, colIndex) : undefined}
+                            onNavigate={onNavigate ? (direction) => onNavigate(rowIndex, colIndex, direction) : undefined}
+                            row={rowIndex}
+                            col={colIndex}
                         />
                     ))}
                 </div>
