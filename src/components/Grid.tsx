@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react';
 import Cell from './Cell';
 
 interface GridProps {
@@ -6,8 +7,18 @@ interface GridProps {
 }
 
 function Grid({ grid, onCellChange }: GridProps) {
+    const gridRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const columns = grid[0]?.length ?? 0;
+
+        if (gridRef.current) {
+            gridRef.current.style.setProperty('--grid-cols', String(columns));
+        }
+    }, [grid]);
+
     return (
-        <div className="grid">
+        <div ref={gridRef} className="grid">
             {grid.map((row, rowIndex) => (
                 <div key={rowIndex} className="grid-row">
                     {row.map((cellValue, colIndex) => (

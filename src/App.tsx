@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import Grid from './components/Grid';
 
-const ROWS = 5;
-const COLS = 7;
+const ROWS = 100;
+const COLS = 50;
 const ALLOWED_CHARS = /^[0-9+\-*/]$/;
 
 function createEmptyGrid() {
