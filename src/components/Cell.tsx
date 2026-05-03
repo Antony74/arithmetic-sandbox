@@ -1,13 +1,13 @@
 import { ChangeEvent } from 'react';
+import { CELL_PATTERN } from '../keyboard';
 
 interface CellProps {
     value: string;
     onChange: (value: string) => void;
+    onFocus: () => void;
 }
 
-const CELL_PATTERN = /^[0-9+\-*/]?$/;
-
-function Cell({ value, onChange }: CellProps) {
+function Cell({ value, onChange, onFocus }: CellProps) {
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
         const text = event.target.value.slice(0, 1);
 
@@ -25,6 +25,7 @@ function Cell({ value, onChange }: CellProps) {
                 maxLength={1}
                 value={value}
                 onChange={handleChange}
+                onFocus={onFocus}
                 aria-label="Arithmetic cell"
                 spellCheck={false}
             />

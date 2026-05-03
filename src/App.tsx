@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import Grid from './components/Grid';
+import Keyboard from './components/Keyboard';
+import { ALLOWED_CHARS, KEYBOARD_KEYS } from './keyboard';
 
 const ROWS = 100;
 const COLS = 50;
-const ALLOWED_CHARS = /^[0-9+\-*/]$/;
 
 function createEmptyGrid() {
     return Array.from({ length: ROWS }, () =>
@@ -11,8 +12,14 @@ function createEmptyGrid() {
     );
 }
 
+interface FocusedCell {
+    row: number;
+    col: number;
+}
+
 function App() {
     const [grid, setGrid] = useState<string[][]>(createEmptyGrid);
+    const [focusedCell, setFocusedCell] = useState<FocusedCell | null>(null);
 
     const handleCellChange = (row: number, col: number, value: string) => {
         const char = value.slice(0, 1);
@@ -28,6 +35,30 @@ function App() {
             return next;
         });
     };
+
+    const handleCellFocus = (row: number, col: number) => {
+        setFocusedCell({ row, col });
+    };
+
+    const handleKeyPress = (key: string) => {
+        if (!focusedCell) {
+            return;
+        }
+
+        handleCellChange(focusedCell.row, focusedCell.col, key);
+    };
+
+    const handleClearCell = () => {
+        if (!focusedCell) {
+            return;
+        }
+
+        handleCellChange(focusedCell.row, focusedCell.col, '');
+    };
+
+    const selectedCellLabel = focusedCell
+        ? `Selected cell: row ${focusedCell.row + 1}, col ${focusedCell.col + 1}`
+        : 'Select a cell to enter values using the on-screen keyboard.';
 
     return (
         <div className="app-shell">
@@ -47,8 +78,18 @@ function App() {
                             cells are allowed.
                         </p>
                     </div>
-                    <Grid grid={grid} onCellChange={handleCellChange} />
+                    <Grid
+                        grid={grid}
+                        onCellChange={handleCellChange}
+                        onCellFocus={handleCellFocus}
+                    />
                 </section>
+                <Keyboard
+                    keys={KEYBOARD_KEYS}
+                    onKeyPress={handleKeyPress}
+                    onClear={handleClearCell}
+                    selectedCellLabel={selectedCellLabel}
+                />
             </main>
 
             <footer className="footer">

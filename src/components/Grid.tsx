@@ -4,9 +4,10 @@ import Cell from './Cell';
 interface GridProps {
     grid: string[][];
     onCellChange: (row: number, col: number, value: string) => void;
+    onCellFocus: (row: number, col: number) => void;
 }
 
-function Grid({ grid, onCellChange }: GridProps) {
+function Grid({ grid, onCellChange, onCellFocus }: GridProps) {
     const gridRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -28,6 +29,7 @@ function Grid({ grid, onCellChange }: GridProps) {
                             onChange={(value) =>
                                 onCellChange(rowIndex, colIndex, value)
                             }
+                            onFocus={() => onCellFocus(rowIndex, colIndex)}
                         />
                     ))}
                 </div>
