@@ -46,7 +46,7 @@ body {
 
 .grid {
     display: grid;
-    grid-template-columns: repeat(var(--grid-cols, 7), minmax(52px, 1fr));
+    grid-template-columns: repeat(var(--grid-cols, 50), minmax(52px, 1fr));
     gap: 10px;
     margin-top: 18px;
     width: 100%;
