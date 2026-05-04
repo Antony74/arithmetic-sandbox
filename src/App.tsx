@@ -1,23 +1,23 @@
 import { useState } from 'react';
-import Grid from './components/Grid';
-import Keyboard from './components/Keyboard';
+import { Grid } from './components/Grid';
+import { Keyboard } from './components/Keyboard';
 import { ALLOWED_CHARS, KEYBOARD_KEYS } from './keyboard';
 
 const ROWS = 100;
 const COLS = 50;
 
-function createEmptyGrid() {
+const createEmptyGrid = () => {
     return Array.from({ length: ROWS }, () =>
         Array.from({ length: COLS }, () => ''),
     );
-}
+};
 
-interface FocusedCell {
+type FocusedCell = {
     row: number;
     col: number;
-}
+};
 
-function App() {
+const App = () => {
     const [grid, setGrid] = useState<string[][]>(createEmptyGrid);
     const [focusedCell, setFocusedCell] = useState<FocusedCell | null>(null);
 
@@ -54,14 +54,20 @@ function App() {
         }
 
         // Focus the next cell
-        const nextCell = document.querySelector(`input[data-row="${nextRow}"][data-col="${nextCol}"]`) as HTMLInputElement;
+        const nextCell = document.querySelector(
+            `input[data-row="${nextRow}"][data-col="${nextCol}"]`,
+        ) as HTMLInputElement;
         if (nextCell) {
             nextCell.focus();
             setFocusedCell({ row: nextRow, col: nextCol });
         }
     };
 
-    const handleNavigate = (row: number, col: number, direction: 'up' | 'down' | 'left' | 'right') => {
+    const handleNavigate = (
+        row: number,
+        col: number,
+        direction: 'up' | 'down' | 'left' | 'right',
+    ) => {
         let nextRow = row;
         let nextCol = col;
 
@@ -81,7 +87,9 @@ function App() {
         }
 
         // Focus the target cell
-        const targetCell = document.querySelector(`input[data-row="${nextRow}"][data-col="${nextCol}"]`) as HTMLInputElement;
+        const targetCell = document.querySelector(
+            `input[data-row="${nextRow}"][data-col="${nextCol}"]`,
+        ) as HTMLInputElement;
         if (targetCell) {
             targetCell.focus();
             setFocusedCell({ row: nextRow, col: nextCol });
@@ -151,6 +159,6 @@ function App() {
             </footer>
         </div>
     );
-}
+};
 
 export default App;

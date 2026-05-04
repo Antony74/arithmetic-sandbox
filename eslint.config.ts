@@ -6,13 +6,7 @@ import tsPlugin from '@typescript-eslint/eslint-plugin';
 
 export default [
     {
-        ignores: [
-            'node_modules/',
-            'dist/',
-            'build/',
-            '.vite/',
-            'coverage/',
-        ],
+        ignores: ['node_modules/', 'dist/', 'build/', '.vite/', 'coverage/'],
     },
     js.configs.recommended,
     {
@@ -35,6 +29,11 @@ export default [
             ...reactHooks.configs.recommended.rules,
             'react/react-in-jsx-scope': 'off',
             'react/jsx-uses-react': 'off',
+            'no-restricted-syntax': [
+                'error',
+                'FunctionExpression',
+                'FunctionDeclaration',
+            ],
         },
     },
     {
@@ -60,6 +59,7 @@ export default [
             ],
             '@typescript-eslint/no-explicit-any': 'warn',
             'no-undef': 'off', // TypeScript handles this
+            '@typescript-eslint/consistent-type-definitions': ['error', 'type'],
         },
     },
 ];

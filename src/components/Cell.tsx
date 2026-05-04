@@ -1,7 +1,7 @@
 import { ChangeEvent, KeyboardEvent } from 'react';
 import { CELL_PATTERN } from '../keyboard';
 
-interface CellProps {
+type CellProps = {
     value: string;
     onChange: (value: string) => void;
     onFocus: () => void;
@@ -9,9 +9,17 @@ interface CellProps {
     onNavigate?: (direction: 'up' | 'down' | 'left' | 'right') => void;
     row: number;
     col: number;
-}
+};
 
-function Cell({ value, onChange, onFocus, onValidInput, onNavigate, row, col }: CellProps) {
+export const Cell = ({
+    value,
+    onChange,
+    onFocus,
+    onValidInput,
+    onNavigate,
+    row,
+    col,
+}: CellProps) => {
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
         const text = event.target.value.slice(0, 1);
 
@@ -62,6 +70,4 @@ function Cell({ value, onChange, onFocus, onValidInput, onNavigate, row, col }: 
             />
         </div>
     );
-}
-
-export default Cell;
+};
